@@ -14,9 +14,12 @@ public class Sum {
 
     public static void main(String[] args) {
         try {
-            CompletableFuture<Integer> completableFuture = CompletableFuture.supplyAsync(() -> findSum(1))
-                    .thenApply(sum -> findSum(11)).thenApply(sum -> findSum(21));
-            System.out.println(completableFuture.get());
+            CompletableFuture<Integer> completableFuture1 = CompletableFuture.supplyAsync(() -> findSum(1));
+            CompletableFuture<Integer> completableFuture2 = CompletableFuture.supplyAsync(() -> findSum(11));
+            CompletableFuture<Integer> completableFuture3 = CompletableFuture.supplyAsync(() -> findSum(21));
+
+            CompletableFuture future= completableFuture1.thenCombine(completableFuture2,(s1,s2)->s1+s2).thenCombine(completableFuture3,(s1,s2)->s1+s2);           
+            System.out.println(future.get());
 
         } catch (Exception e) {
             e.printStackTrace();

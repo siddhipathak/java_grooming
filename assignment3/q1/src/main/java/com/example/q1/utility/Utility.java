@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import com.example.q1.enums.Category;
+import com.example.q1.exception.CategoryNotFoundException;
 import com.example.q1.model.Product;
 
 public class Utility {
@@ -23,5 +24,15 @@ public class Utility {
         itemList.add(withWarrantyList);
         itemList.add(withoutWarrantyList);
         return itemList;
+    }
+
+    public static Category findByName (String inputCategory) {
+            for(Category c: Category.values())
+            {
+                if (c.name().equalsIgnoreCase(inputCategory)) {
+                    return Category.valueOf(inputCategory.toUpperCase());
+                }
+            }
+            throw new CategoryNotFoundException("Category "+ inputCategory +" not found !");
     }
 }
